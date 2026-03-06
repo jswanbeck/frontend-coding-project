@@ -15,7 +15,7 @@ Your app should include:
 
 * use React and TypeScript - styling and frameworks
 * timebox your work to about 1–2 hours
-* you may use real APIs, mocked responses, or a local simulation (should we send them an OpenAI key?)
+* you may use real APIs, mocked responses, or a local simulation
 * some requirements are intentionally ambiguous; make reasonable product decisions
 
 ### Deliverables
