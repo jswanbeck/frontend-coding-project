@@ -11,7 +11,7 @@ export function useChatIndex(repo: ChatRepository) {
   useEffect(() => {
     if (!hydratedRef.current) return;
     repo.saveIndex(state);
-  }, [state]);
+  }, [repo, state]);
 
   const chats = useMemo(() => [...state.chats].sort((a, b) => b.createdAt - a.createdAt), [state.chats]);
   const activeChatId = state.activeChatId;

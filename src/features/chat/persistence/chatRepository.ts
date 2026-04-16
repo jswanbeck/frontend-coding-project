@@ -57,10 +57,13 @@ export const localStorageChatRepository: ChatRepository = {
 
   loadMessages(chatId) {
     if (typeof window === "undefined") return null;
-    const parsed = safeParse<ChatMessage[]>(
-      window.localStorage.getItem(`${MESSAGES_KEY_PREFIX}${chatId}`),
-    );
+
+    const raw = window.localStorage.getItem(`${MESSAGES_KEY_PREFIX}${chatId}`);
+    if (raw === null) return [];
+
+    const parsed = safeParse<ChatMessage[]>(raw);
     if (!parsed || !Array.isArray(parsed)) return null;
+    
     return parsed
       .filter((m) => m && typeof m.id === "string" && typeof m.role === "string" && typeof m.content === "string")
       .map((m) => ({

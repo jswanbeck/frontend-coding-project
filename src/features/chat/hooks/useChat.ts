@@ -51,7 +51,13 @@ export function useChat(opts: UseChatOptions) {
     hydratedChatIdRef.current = undefined;
     lastTitleRef.current = null;
     const stored = onLoadMessagesRef.current(chatId);
-    if (stored && stored.length > 0) {
+    if (stored === null) {
+      msgRef.current.resetToInitial();
+      pendingHydrationRef.current = undefined;
+      return;
+    }
+
+    if (stored.length > 0) {
       msgRef.current.setMessages(stored);
     } else {
       msgRef.current.resetToInitial();
@@ -71,6 +77,9 @@ export function useChat(opts: UseChatOptions) {
   // When messages change, persist them to chat history
   useEffect(() => {
     if (!chatId || hydratedChatIdRef.current !== chatId) return;
+
+    const hasUserContent = msg.messages.some((m) => m.role === "user" && m.content.trim());
+    if (!hasUserContent) return;
 
     onSaveMessagesRef.current(chatId, msg.messages);
   }, [chatId, msg.messages]);
