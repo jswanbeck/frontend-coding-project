@@ -24,7 +24,6 @@
 - Open settings: go to `/settings` (or click Settings in the top nav)
 - Chat mode:
   - Mock: uses hard-coded responses (no API key required)
-  - OpenAI: streams responses from the `/api/chat` endpoint (requires `OPENAI_API_KEY` in `.env.local`)
 - Locale: switch between `en`, `fr`, and a `debug` locale
   - The purpose of `debug` is to check for missed translation strings and to make sure that text overflows properly within UI elements, should be disabled in production
 
@@ -50,28 +49,13 @@
 npm install
 ```
 
-### Environment variables (optional)
-
-This project runs in mock mode by default (no API key required). To override settings, create a `.env.local` in the repo root:
-
-```bash
-# Chat backend mode: "mock" (default) or "openai"
-NEXT_PUBLIC_CHAT_MODE=mock
-
-# Required only when NEXT_PUBLIC_CHAT_MODE=openai
-OPENAI_API_KEY=your_key_here
-
-# Optional (defaults to gpt-4o-mini)
-OPENAI_MODEL=gpt-4o-mini
-```
-
 Run the development server:
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser
 
 ### Other scripts
 
@@ -89,7 +73,6 @@ npm run lint
 ## Assumptions
 
 - A mocked backend service is the default so the app runs without external dependencies 
-  - Tested with OpenAI API key for proof-of-concept but not designed around being used with a real AI service
 - Streaming is delivered via server endpoint SSE chunks to the client 
 - Conversation history is persisted in `localStorage` and is safe to clear by the user
   - This was done for the purpose of being able to deploy to Vercel without the need to set up any sort of heavier persistence layer, but wouldn't be a realistic solution for a real production app
@@ -102,6 +85,7 @@ npm run lint
 
 ## Next steps / waterline
 
+- Experiment with real / non-mocked data, OpenAI API key?
 - Debug tools for viewing / manipulating data in local storage
 - Edit previously send messages / forking conversations
 - Exporting conversation history

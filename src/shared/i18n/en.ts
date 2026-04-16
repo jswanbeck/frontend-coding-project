@@ -42,7 +42,6 @@ export const en: Translations = {
     languageDebug: "Debug (show keys)",
     apiMode: "Chat API",
     apiModeMock: "Mock",
-    apiModeOpenAI: "OpenAI",
   },
   mock: {
     statusThinking: "Thinking (mock)...",

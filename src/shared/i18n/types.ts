@@ -46,7 +46,6 @@ export type Translations = {
     languageDebug: string;
     apiMode: string;
     apiModeMock: string;
-    apiModeOpenAI: string;
   };
 };
 

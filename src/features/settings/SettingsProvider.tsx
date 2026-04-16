@@ -25,7 +25,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     loadStored("settings:locale", "en", ["en", "fr", "debug"] as const),
   );
   const [chatMode, setChatModeState] = useState<ChatMode>(() =>
-    loadStored("settings:chatMode", "mock", ["mock", "openai"] as const),
+    loadStored("settings:chatMode", "mock", ["mock"] as const),
   );
 
   useEffect(() => {

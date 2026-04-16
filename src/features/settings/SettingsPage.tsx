@@ -35,10 +35,9 @@ export function SettingsPage() {
             <select
               className={styles.settingSelect}
               value={chatMode}
-              onChange={(e) => setChatMode(e.target.value as "mock" | "openai")}
+              onChange={(e) => setChatMode(e.target.value as "mock")}
             >
               <option value="mock">{t("settings.apiModeMock")}</option>
-              <option value="openai">{t("settings.apiModeOpenAI")}</option>
             </select>
           </div>
         </div>
