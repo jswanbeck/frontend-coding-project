@@ -17,6 +17,8 @@ export type Translations = {
     historyEmptyTitle: string;
     historyEmptyBody: string;
     assistantTitle: string;
+    expandSidebar: string;
+    collapseSidebar: string;
   };
   chat: {
     retry: string;

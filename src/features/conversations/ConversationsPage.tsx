@@ -16,6 +16,7 @@ export function ConversationsPage() {
   const service = useMemo(() => getChatService(), []);
   const history = useChatIndex(repo);
   const [view, setView] = useState<"list" | "chat">("list");
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const activeId = history.activeChatId;
   const activeCreatedAt = useMemo(
@@ -95,9 +96,17 @@ export function ConversationsPage() {
   if (view === "chat" && activeId) {
     return (
       <AppShell active="conversations" fillHeight>
-        <div className={styles.splitLayout}>
+        <div className={sidebarCollapsed ? styles.splitLayoutCollapsed : styles.splitLayout}>
           <aside className={styles.splitSidebar} aria-label={t("home.chatHistoryTitle")}>
-            {conversationList}
+            <button
+              type="button"
+              className={styles.collapseHandle}
+              aria-label={sidebarCollapsed ? t("home.expandSidebar") : t("home.collapseSidebar")}
+              onClick={() => setSidebarCollapsed((c) => !c)}
+            >
+              <span aria-hidden>{sidebarCollapsed ? "›" : "‹"}</span>
+            </button>
+            {!sidebarCollapsed && conversationList}
           </aside>
           <section className={styles.splitMain} aria-label={t("app.title")}>
             {chatPanel}

@@ -17,6 +17,8 @@ export const en: Translations = {
     historyEmptyTitle: "No conversation history",
     historyEmptyBody: "Create a new chat to get started.",
     assistantTitle: "AI Assistant",
+    expandSidebar: "Expand sidebar",
+    collapseSidebar: "Collapse sidebar",
   },
   chat: {
     retry: "Retry",
