@@ -11,7 +11,6 @@ export const en: Translations = {
   home: {
     chatHistoryTitle: "Conversation History",
     newChat: "New Chat",
-    home: "Home",
     close: "Close",
     delete: "Delete",
     historyEmptyTitle: "No conversation history",
@@ -22,7 +21,6 @@ export const en: Translations = {
   },
   chat: {
     retry: "Retry",
-    cancel: "Cancel",
     send: "Send",
     placeholder: "Ask a question...",
     roleAssistant: "Assistant",
@@ -38,7 +36,6 @@ export const en: Translations = {
   },
   settings: {
     title: "Settings",
-    subtitle: "Manage your app preferences.",
     language: "Language",
     languageEn: "English",
     languageFr: "French",

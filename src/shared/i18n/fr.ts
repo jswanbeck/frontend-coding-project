@@ -11,7 +11,6 @@ export const fr: Translations = {
   home: {
     chatHistoryTitle: "Historique des conversations",
     newChat: "Nouvelle conversation",
-    home: "Accueil",
     close: "Fermer",
     delete: "Supprimer",
     historyEmptyTitle: "Aucun historique de conversation",
@@ -22,7 +21,6 @@ export const fr: Translations = {
   },
   chat: {
     retry: "Réessayer",
-    cancel: "Annuler",
     send: "Envoyer",
     placeholder: "Posez une question...",
     roleAssistant: "Assistant",
@@ -38,7 +36,6 @@ export const fr: Translations = {
   },
   settings: {
     title: "Paramètres",
-    subtitle: "Gérez les préférences de l'application.",
     language: "Langue",
     languageEn: "Anglais",
     languageFr: "Français",

@@ -11,7 +11,6 @@ export type Translations = {
   home: {
     chatHistoryTitle: string;
     newChat: string;
-    home: string;
     close: string;
     delete: string;
     historyEmptyTitle: string;
@@ -22,7 +21,6 @@ export type Translations = {
   };
   chat: {
     retry: string;
-    cancel: string;
     send: string;
     placeholder: string;
     roleAssistant: string;
@@ -42,7 +40,6 @@ export type Translations = {
   };
   settings: {
     title: string;
-    subtitle: string;
     language: string;
     languageEn: string;
     languageFr: string;
