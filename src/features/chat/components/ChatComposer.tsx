@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import styles from "@/features/chat/styles/chat.module.css";
+import styles from "@/features/chat/components/ChatComposer.module.css";
 import { useT } from "@/shared/i18n/useT";
 
 export function ChatComposer(props: {
@@ -12,7 +12,7 @@ export function ChatComposer(props: {
   const [input, setInput] = useState("");
   const t = useT();
 
-  async function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: { preventDefault(): void }) {
     e.preventDefault();
     const text = input.trim();
     if (!text || props.disabled) return;

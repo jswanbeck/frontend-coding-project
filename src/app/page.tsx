@@ -1,7 +1,5 @@
-"use client";
-
-import { ChatPage } from "@/features/chat/ChatPage";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return <ChatPage />;
+  redirect("/conversations");
 }

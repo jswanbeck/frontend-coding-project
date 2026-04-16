@@ -9,6 +9,7 @@ export type ChatMessage = {
   id: string;
   role: Role;
   content: string;
+  createdAt: number;
   assistantVersions?: AssistantVersions;
 };
 

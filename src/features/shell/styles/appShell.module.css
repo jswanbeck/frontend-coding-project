@@ -1,0 +1,113 @@
+.page {
+  --panel: var(--background);
+
+  --fg: rgba(255, 255, 255, 0.92);
+  --fg-secondary: rgba(255, 255, 255, 0.92);
+  --border: rgba(222, 232, 255, 0.14);
+  --muted: rgba(222, 232, 255, 0.65);
+  --bubble: rgba(222, 232, 255, 0.04);
+  --bubble-strong: rgba(222, 232, 255, 0.07);
+  --bubble-strong-hover: rgb(19, 21, 22);
+  --accent: rgb(60, 92, 138);
+  --accent-strong: rgb(48, 74, 110);
+  --accent-soft: rgba(107, 169, 255, 0.18);
+
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: var(--font-geist-sans);
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+  color: var(--fg);
+}
+
+.topNav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.topNavInner {
+  height: 56px;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.topNavLinks {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.navLink,
+.navLinkActive {
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 550;
+  cursor: pointer;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+}
+
+.navLink:hover {
+  color: var(--fg);
+  background: var(--bubble-strong);
+}
+
+.navLinkActive {
+  color: var(--fg);
+  background: var(--bubble-strong);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.appTitle {
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.2px;
+  margin: 0;
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  max-width: 1180px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.shell {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: auto;
+  background: var(--panel);
+  height: fit-content;
+  max-height: calc(100vh - 56px - 36px);
+  max-height: calc(100dvh - 56px - 36px);
+  display: flex;
+  flex-direction: column;
+}
+
+.shellFill {
+  height: calc(100vh - 56px - 36px);
+  height: calc(100dvh - 56px - 36px);
+}
+

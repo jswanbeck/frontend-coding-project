@@ -1,21 +1,48 @@
 "use client";
 
-import styles from "@/features/chat/styles/chat.module.css";
-import { useChat } from "@/features/chat/hooks/useChat";
-import { ChatHeader } from "@/features/chat/components/ChatHeader";
-import { ChatConversation } from "@/features/chat/components/ChatConversation";
-import { ChatComposer } from "@/features/chat/components/ChatComposer";
-import { useI18n } from "@/shared/i18n/I18nProvider";
+import styles from "@/features/chat/ChatPage.module.css";
+import { useEffect, useMemo, useState } from "react";
+import { useChat, ChatHeader, ChatConversation, ChatComposer, localStorageChatRepository, useChatIndex } from "@/features/chat";
+import { useT } from "@/shared/i18n/useT";
+import { mockChatService } from "@/services/chat/mockChatService";
 
 export function ChatPage() {
-  const chat = useChat();
-  const { tr } = useI18n();
+  const repo = localStorageChatRepository;
+  const { chats, activeChatId, createChat, touchChat } = useChatIndex(repo);
+  const [chatId, setChatId] = useState<string | null>(activeChatId);
+  const t = useT();
+
+  useEffect(() => {
+    if (activeChatId) {
+      setChatId(activeChatId);
+      return;
+    }
+    const id = createChat();
+    setChatId(id);
+  }, [activeChatId, createChat]);
+
+  const conversationCreatedAt = useMemo(() => {
+    if (!chatId) return 0;
+    return chats.find((c) => c.id === chatId)?.createdAt ?? 0;
+  }, [chatId, chats]);
+
+  const chat = useChat({
+    chatId: chatId ?? undefined,
+    conversationCreatedAt,
+    service: mockChatService,
+    onTouchChat: (patch) => {
+      if (!chatId) return;
+      touchChat(chatId, patch);
+    },
+    onLoadMessages: (id) => repo.loadMessages(id),
+    onSaveMessages: (id, messages) => repo.saveMessages(id, messages),
+  });
 
   return (
     <div className={styles.page}>
       <main className={styles.main}>
         <ChatHeader
-          title={tr.app.title}
+          title={t("app.title")}
         />
 
         <ChatConversation

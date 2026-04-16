@@ -1,0 +1,253 @@
+.buttonPrimary,
+.buttonSecondary {
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-weight: 650;
+  font-size: 12px;
+  letter-spacing: 0.1px;
+}
+
+.buttonPrimary {
+  background: var(--accent);
+  color: rgba(255, 255, 255, 0.96);
+  border-color: rgba(0, 0, 0, 0);
+}
+
+.buttonPrimary:hover {
+  background: var(--accent-strong);
+}
+
+.buttonSecondary {
+  background: transparent;
+  color: var(--fg-secondary);
+}
+
+.buttonSecondary:hover {
+  border-color: rgba(49, 114, 208, 0.35);
+  color: rgba(49, 114, 208, 0.92);
+}
+
+.shellTitle {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin: 0;
+  color: var(--fg);
+}
+
+.landing {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 22px 22px 38px 22px;
+  overflow: auto;
+}
+
+.historyLandingContent {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.historyLandingHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.emptyState {
+  width: 100%;
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  background: var(--bubble);
+  padding: 18px;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: -0.2px;
+  margin: 0 0 6px 0;
+}
+
+.emptyBody {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+.historyList {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px;
+}
+
+.historyListInner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.historyRow {
+  display: flex;
+  align-items: stretch;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bubble);
+  overflow: hidden;
+}
+
+.historyItem,
+.historyItemActive {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+}
+
+.historyRow:has(.historyItem:hover) {
+  border-color: rgba(49, 114, 208, 0.35);
+}
+
+.historyRow:has(.historyItemActive) {
+  border-color: rgba(49, 114, 208, 0.45);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.historyItemTitle {
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: -0.1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.historyItemMeta {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.iconButton {
+  flex-shrink: 0;
+  width: 30px;
+  height: auto;
+  border-radius: 0;
+  border: none;
+  border-left: 1px solid var(--border);
+  font-size: 14px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.iconButton:hover {
+  color: rgb(255, 98, 87);
+  opacity: 1;
+}
+
+.historyFooter {
+  padding: 10px 12px;
+  background: var(--panel);
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+}
+
+.historyFooter .buttonPrimary {
+  width: 100%;
+  height: 36px;
+}
+
+.historyEmpty {
+  padding: 12px;
+  border: 1px dashed var(--border);
+  background: var(--bubble);
+  border-radius: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.splitLayout {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+}
+
+.splitSidebar {
+  min-height: 0;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+}
+
+.splitMain {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 860px) {
+  .splitLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .splitSidebar {
+    display: none;
+  }
+}
+
+.chatRight {
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatFull {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.assistantHeader {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bubble-strong);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.assistantTitle {
+  font-size: 13px;
+  font-weight: 650;
+  margin: 0;
+}
+

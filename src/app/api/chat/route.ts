@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { encodeSseEvent, sseHeaders } from "@/lib/sse";
 import type { ChatMessage, StreamEvent } from "@/lib/types";
 import { streamAssistantText } from "@/lib/llm";
+import { t } from "@/shared/i18n/i18n";
 
 export const runtime = "nodejs";
 
@@ -33,14 +34,14 @@ export async function POST(req: Request) {
       };
 
       try {
-        push({ type: "status", message: "Thinking…" });
+        push({ type: "status", message: t("chat.statusThinking") });
         for await (const token of streamAssistantText({ messages: body.messages, signal: req.signal })) {
           push({ type: "text", content: token });
         }
         push({ type: "done" });
       } catch (err) {
         const message =
-          err instanceof Error ? err.message : "Something went wrong while generating the response.";
+          err instanceof Error ? err.message : t("chat.error.somethingWentWrong");
         push({ type: "error", message });
       } finally {
         controller.close();

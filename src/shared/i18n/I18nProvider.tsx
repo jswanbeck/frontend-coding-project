@@ -1,8 +1,8 @@
 "use client";
 
 import { createContext, useContext, useMemo } from "react";
-import type { Locale, Translations } from "./types";
-import { getLocale, getTranslations } from "./i18n";
+import type { Locale, Translations } from "@/shared/i18n/types";
+import { getLocale, getTranslations } from "@/shared/i18n/i18n";
 
 type I18nValue = {
   locale: Locale;

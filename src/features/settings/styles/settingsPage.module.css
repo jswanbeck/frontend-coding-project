@@ -1,0 +1,72 @@
+.landing {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 22px 22px 38px 22px;
+  overflow: auto;
+}
+
+.settingsContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 720px;
+  gap: 14px;
+}
+
+.settingsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 34px;
+}
+
+.shellTitle {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin: 0;
+  color: var(--fg);
+}
+
+.settingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 6px 0;
+  width: 80%;
+  align-self: center;
+}
+
+.settingLabel {
+  font-size: 13px;
+  font-weight: 550;
+  color: var(--fg);
+}
+
+.settingSelect {
+  height: 30px;
+  padding: 0 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bubble-strong);
+  color: var(--fg);
+  font-size: 12px;
+  cursor: pointer;
+  min-width: 160px;
+}
+
+.settingSelect:focus-visible {
+  outline: 2px solid rgba(49, 114, 208, 0.55);
+  outline-offset: 2px;
+}
+
+.settingSelect option,
+.settingSelect optgroup {
+  background: var(--panel);
+  color: var(--fg);
+}
+

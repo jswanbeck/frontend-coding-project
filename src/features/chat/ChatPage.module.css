@@ -1,0 +1,35 @@
+.page {
+  --panel: var(--background);
+
+  --fg: rgba(255, 255, 255, 0.92);
+  --fg-secondary: rgba(255, 255, 255, 0.92);
+  --border: rgba(222, 232, 255, 0.14);
+  --muted: rgba(222, 232, 255, 0.65);
+  --bubble: rgba(222, 232, 255, 0.04);
+  --bubble-user: rgba(222, 232, 255, 0.07);
+  --accent: rgb(60, 92, 138);
+  --accent-strong: rgb(48, 74, 110);
+  --accent-soft: rgba(107, 169, 255, 0.18);
+
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: var(--font-geist-sans);
+  display: flex;
+  justify-content: center;
+  padding: 20px 12px;
+}
+
+.main {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  height: calc(100vh - 40px);
+  height: calc(100dvh - 40px);
+  color: var(--fg);
+}

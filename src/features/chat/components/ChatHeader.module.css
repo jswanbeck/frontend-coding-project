@@ -1,0 +1,21 @@
+.header {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bubble);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}

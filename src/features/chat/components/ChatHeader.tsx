@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "@/features/chat/styles/chat.module.css";
+import styles from "@/features/chat/components/ChatHeader.module.css";
 export function ChatHeader(props: {
   title: string;
 }) {

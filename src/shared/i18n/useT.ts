@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback } from "react";
-import { useI18n } from "./I18nProvider";
-import { i18nDebugKeysEnabled } from "./i18n";
+import { useI18n } from "@/shared/i18n/I18nProvider";
+import { i18nDebugKeysEnabled } from "@/shared/i18n/i18n";
 
 export function useT() {
   const { tr } = useI18n();

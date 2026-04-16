@@ -1,5 +1,6 @@
-import type { ChatService } from "./types";
-import { getLocale, getTranslations } from "@/shared/i18n/i18n";
+import type { ChatService } from "@/services/chat/types";
+import { t } from "@/shared/i18n/i18n";
+import { en } from "@/shared/i18n/en";
 
 function sleep(ms: number, signal?: AbortSignal) {
   return new Promise<void>((resolve, reject) => {
@@ -17,11 +18,12 @@ function sleep(ms: number, signal?: AbortSignal) {
 
 export const mockChatService: ChatService = {
   async *stream(req, opts) {
-    const tr = getTranslations(getLocale());
-    yield { type: "status", message: tr.mock.statusThinking };
+    yield { type: "status", message: t("mock.statusThinking") };
     await sleep(250, opts?.signal);
 
-    const body = tr.mock.cannedResponses[Math.floor(Math.random() * tr.mock.cannedResponses.length)];
+    const max = en.mock.cannedResponses.length;
+    const idx = max > 0 ? Math.floor(Math.random() * max) : 0;
+    const body = t(`mock.cannedResponses.${idx}`);
     for (const ch of body) {
       await sleep(8, opts?.signal);
       yield { type: "text", content: ch };

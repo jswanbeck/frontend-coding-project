@@ -1,8 +1,8 @@
 "use client";
 
-import { I18nProvider } from "@/shared/i18n/I18nProvider";
+import { SettingsProvider } from "@/features/settings";
 
 export function Providers(props: { children: React.ReactNode }) {
-  return <I18nProvider>{props.children}</I18nProvider>;
+  return <SettingsProvider>{props.children}</SettingsProvider>;
 }
 

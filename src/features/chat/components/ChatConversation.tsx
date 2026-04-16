@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ChatMessage } from "@/lib/types";
-import styles from "@/features/chat/styles/chat.module.css";
+import styles from "@/features/chat/components/ChatConversation.module.css";
+import { formatTimestampUtc } from "@/shared/utils/time";
+import { useT } from "@/shared/i18n/useT";
 
 export function ChatConversation(props: {
   messages: ChatMessage[];
@@ -11,11 +13,14 @@ export function ChatConversation(props: {
   isStreaming: boolean;
   onSetAssistantVersion: (messageId: string, nextIndex: number) => void;
 }) {
+  const t = useT();
   const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const [dismissedError, setDismissedError] = useState<string | null>(null);
+  const toastError = props.error && props.error !== dismissedError ? props.error : null;
 
   useEffect(() => {
     scrollerRef.current?.scrollTo({ top: scrollerRef.current.scrollHeight, behavior: "smooth" });
-  }, [props.messages, props.status, props.error, props.isStreaming]);
+  }, [props.messages, props.status, props.isStreaming]);
 
   return (
     <div className={styles.conversation}>
@@ -25,7 +30,10 @@ export function ChatConversation(props: {
             {m.role === "assistant" ? (
               <div className={styles.messageStack}>
                 <div className={styles.bubble}>
-                  <div className={styles.roleLabel}>Assistant</div>
+                  <div className={styles.roleRow}>
+                    <div className={styles.roleLabel}>{t("chat.roleAssistant")}</div>
+                    <div className={styles.timeLabel}>{formatTimestampUtc(m.createdAt)}</div>
+                  </div>
                   <div className={styles.content}>{m.content}</div>
                 </div>
                 {m.assistantVersions && m.assistantVersions.items.length > 1 ? (
@@ -56,7 +64,10 @@ export function ChatConversation(props: {
               </div>
             ) : (
               <div className={styles.bubble}>
-                <div className={styles.roleLabel}>You</div>
+                <div className={styles.roleRow}>
+                  <div className={styles.roleLabel}>{t("chat.roleYou")}</div>
+                  <div className={styles.timeLabel}>{formatTimestampUtc(m.createdAt)}</div>
+                </div>
                 <div className={styles.content}>{m.content}</div>
               </div>
             )}
@@ -64,9 +75,30 @@ export function ChatConversation(props: {
         ))}
       </div>
 
+      {toastError && (
+        <div
+          key={toastError}
+          className={`${styles.toast} ${styles.toastAuto}`}
+          role="alert"
+          aria-live="assertive"
+          onAnimationEnd={(e) => {
+            if (e.animationName === "toastSlideOut") setDismissedError(toastError);
+          }}
+        >
+          <span className={styles.toastMessage}>{toastError}</span>
+          <button
+            type="button"
+            className={styles.toastClose}
+            onClick={() => setDismissedError(toastError)}
+            aria-label="Dismiss error"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       <div className={styles.statusDock} aria-live="polite" aria-atomic="true">
-        {props.error ? <div className={styles.error}>{props.error}</div> : null}
-        {!props.error && props.status ? <div className={styles.status}>{props.status}</div> : null}
+        {props.status ? <div className={styles.status}>{props.status}</div> : null}
       </div>
     </div>
   );

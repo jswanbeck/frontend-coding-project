@@ -1,5 +1,5 @@
-import type { ChatService } from "./types";
-import { parseSseEvents } from "./parseSse";
+import type { ChatService } from "@/services/chat/types";
+import { parseSseEvents } from "@/services/chat/parseSse";
 import type { StreamEvent } from "@/lib/types";
 
 export const openaiSseChatService: ChatService = {
