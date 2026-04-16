@@ -23,6 +23,7 @@ export function useChat(opts: UseChatOptions) {
   const onLoadMessagesRef = useRef(onLoadMessages);
   const onSaveMessagesRef = useRef(onSaveMessages);
   const hydratedChatIdRef = useRef<string | undefined>(undefined);
+  const pendingHydrationRef = useRef<string | undefined>(undefined);
   const lastTitleRef = useRef<string | null>(null);
 
   const msg = useChatMessages(conversationCreatedAt);
@@ -55,8 +56,17 @@ export function useChat(opts: UseChatOptions) {
     } else {
       msgRef.current.resetToInitial();
     }
-    hydratedChatIdRef.current = chatId;
+    pendingHydrationRef.current = chatId;
   }, [chatId]);
+
+  // Don't run side effects while msg.messages still contains the previous chat's messages
+  // (Shouldn't update the conversation label until we're sure the new chat's messages are loaded)
+  useEffect(() => {
+    if (pendingHydrationRef.current) {
+      hydratedChatIdRef.current = pendingHydrationRef.current;
+      pendingHydrationRef.current = undefined;
+    }
+  }, [msg.messages]);
 
   // When messages change, persist them to chat history
   useEffect(() => {
