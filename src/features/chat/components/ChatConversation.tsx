@@ -9,14 +9,21 @@ import { useT } from "@/shared/i18n/useT";
 export function ChatConversation(props: {
   messages: ChatMessage[];
   status: string | null;
-  error: string | null;
+  toastMessage: string | null;
   isStreaming: boolean;
   onSetAssistantVersion: (messageId: string, nextIndex: number) => void;
 }) {
   const t = useT();
   const scrollerRef = useRef<HTMLDivElement | null>(null);
-  const [dismissedError, setDismissedError] = useState<string | null>(null);
-  const toastError = props.error && props.error !== dismissedError ? props.error : null;
+  const [toast, setToast] = useState<string | null>(props.toastMessage);
+
+  useEffect(() => {
+    Promise.resolve().then(() => setToast(props.toastMessage));
+  }, [props.toastMessage]);
+
+  function dismissToast() {
+    setToast(null);
+  }
 
   useEffect(() => {
     scrollerRef.current?.scrollTo({ top: scrollerRef.current.scrollHeight, behavior: "smooth" });
@@ -75,21 +82,21 @@ export function ChatConversation(props: {
         ))}
       </div>
 
-      {toastError && (
+      {toast && (
         <div
-          key={toastError}
+          key={toast}
           className={`${styles.toast} ${styles.toastAuto}`}
           role="alert"
           aria-live="assertive"
           onAnimationEnd={(e) => {
-            if (e.animationName === "toastSlideOut") setDismissedError(toastError);
+            if (e.animationName === "toastSlideOut") dismissToast();
           }}
         >
-          <span className={styles.toastMessage}>{toastError}</span>
+          <span className={styles.toastMessage}>{toast}</span>
           <button
             type="button"
             className={styles.toastClose}
-            onClick={() => setDismissedError(toastError)}
+            onClick={dismissToast}
             aria-label="Dismiss error"
           >
             ✕

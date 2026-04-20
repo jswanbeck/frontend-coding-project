@@ -27,11 +27,12 @@ export function useChatMessages(conversationCreatedAt: number) {
     setMessages(getInitialMessages(conversationCreatedAt));
   }
 
-  function appendUserMessage(content: string): ChatMessage[] {
-    const msg: ChatMessage = { id: uid(), role: "user", content, createdAt: Date.now() };
+  function appendUserMessage(content: string): { messages: ChatMessage[]; userMessageId: string } {
+    const userMessageId = uid();
+    const msg: ChatMessage = { id: userMessageId, role: "user", content, createdAt: Date.now() };
     const next = [...messages, msg];
     setMessages(next);
-    return next;
+    return { messages: next, userMessageId };
   }
 
   function appendAssistantPlaceholder(): string {
@@ -41,6 +42,12 @@ export function useChatMessages(conversationCreatedAt: number) {
       { id, role: "assistant", content: "", createdAt: Date.now(), assistantVersions: { items: [""], activeIndex: 0 } },
     ]);
     return id;
+  }
+
+  function removeMessagesById(ids: string[]) {
+    if (!ids.length) return;
+    const set = new Set(ids);
+    setMessages((prev) => prev.filter((m) => !set.has(m.id)));
   }
 
   function appendTextChunk(assistantId: string, chunk: string) {
@@ -79,6 +86,22 @@ export function useChatMessages(conversationCreatedAt: number) {
     );
   }
 
+  function removeLatestAssistantVersion(assistantId: string) {
+    setMessages((prev) =>
+      prev.map((m) => {
+        if (m.id !== assistantId || m.role !== "assistant") return m;
+        const av = m.assistantVersions;
+        if (!av || av.items.length <= 1) return m;
+
+        const nextItems = av.items.slice(0, -1);
+        const nextActiveIndex = Math.min(av.activeIndex, nextItems.length - 1);
+        const nextContent = nextItems[nextActiveIndex] ?? "";
+
+        return { ...m, content: nextContent, assistantVersions: { items: nextItems, activeIndex: nextActiveIndex } };
+      }),
+    );
+  }
+
   const lastUserMessage = useMemo(() => {
     const reversed = [...messages].reverse();
     return reversed.find((m) => m.role === "user")?.content ?? "";
@@ -91,8 +114,10 @@ export function useChatMessages(conversationCreatedAt: number) {
     resetToInitial,
     appendUserMessage,
     appendAssistantPlaceholder,
+    removeMessagesById,
     appendTextChunk,
     setAssistantVersion,
     prepareRetry,
+    removeLatestAssistantVersion,
   };
 }

@@ -34,6 +34,11 @@ export function useChat(opts: UseChatOptions) {
 
   const msgRef = useRef(msg);
   const streamRef = useRef(stream);
+  const currentRunRef = useRef<
+    | { kind: "submit"; userMessageId: string; assistantMessageId: string }
+    | { kind: "retry"; assistantMessageId: string }
+    | null
+  >(null);
 
   useEffect(() => {
     onTouchChatRef.current = onTouchChat;
@@ -102,8 +107,10 @@ export function useChat(opts: UseChatOptions) {
     const q = question.trim();
     if (!q || stream.isStreaming) return;
 
-    const promptMessages = msg.appendUserMessage(q);
-    await stream.run(promptMessages);
+    const { messages: promptMessages, userMessageId } = msg.appendUserMessage(q);
+    const assistantMessageId = msg.appendAssistantPlaceholder();
+    currentRunRef.current = { kind: "submit", userMessageId, assistantMessageId };
+    await stream.run(promptMessages, assistantMessageId);
   }
 
   async function retry() {
@@ -119,16 +126,28 @@ export function useChat(opts: UseChatOptions) {
     });
 
     msg.prepareRetry(lastAssistant.id);
+    currentRunRef.current = { kind: "retry", assistantMessageId: lastAssistant.id };
     await stream.run(promptMessages, lastAssistant.id);
+  }
+
+  function cancel() {
+    stream.cancel();
+    const run = currentRunRef.current;
+    if (run?.kind === "submit") {
+      msg.removeMessagesById([run.userMessageId, run.assistantMessageId]);
+    } else if (run?.kind === "retry") {
+      msg.removeLatestAssistantVersion(run.assistantMessageId);
+    }
+    currentRunRef.current = null;
   }
 
   return {
     messages: msg.messages,
     status: stream.status,
-    error: stream.error,
+    toastMessage: stream.toastMessage,
     isStreaming: stream.isStreaming,
     submit,
-    cancel: stream.cancel,
+    cancel,
     retry,
     setAssistantVersion: msg.setAssistantVersion,
   };

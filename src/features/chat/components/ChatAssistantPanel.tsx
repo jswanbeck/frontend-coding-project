@@ -26,11 +26,11 @@ export function ChatAssistantPanel(props: {
       <ChatConversation
         messages={chat.messages}
         status={chat.status}
-        error={chat.error}
+        toastMessage={chat.toastMessage}
         isStreaming={chat.isStreaming}
         onSetAssistantVersion={chat.setAssistantVersion}
       />
-      <ChatComposer disabled={chat.isStreaming} onSend={chat.submit} onRetry={chat.retry} />
+      <ChatComposer isStreaming={chat.isStreaming} onSend={chat.submit} onStop={chat.cancel} onRetry={chat.retry} />
     </div>
   );
 }

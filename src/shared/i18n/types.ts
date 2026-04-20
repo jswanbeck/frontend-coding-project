@@ -22,6 +22,7 @@ export type Translations = {
   chat: {
     retry: string;
     send: string;
+    stop: string;
     placeholder: string;
     roleAssistant: string;
     roleYou: string;

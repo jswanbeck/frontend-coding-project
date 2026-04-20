@@ -12,7 +12,7 @@ type StreamCallbacks = {
 
 export function useChatStream(service: ChatService, callbacks: StreamCallbacks) {
   const [status, setStatus] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isStreaming, setIsStreaming] = useState(false);
   const controllerRef = useRef<AbortController | null>(null);
   const callbacksRef = useRef(callbacks);
@@ -24,7 +24,7 @@ export function useChatStream(service: ChatService, callbacks: StreamCallbacks) 
   useEffect(() => () => controllerRef.current?.abort(), []);
 
   async function run(promptMessages: ChatMessage[], assistantMessageId?: string) {
-    setError(null);
+    setToastMessage(null);
     setStatus(t("chat.statusConnecting"));
     setIsStreaming(true);
 
@@ -37,16 +37,16 @@ export function useChatStream(service: ChatService, callbacks: StreamCallbacks) 
       for await (const evt of service.stream({ messages: promptMessages }, { signal: controller.signal })) {
         if (evt.type === "status") setStatus(evt.message);
         if (evt.type === "text") callbacksRef.current.onTextChunk(assistantId, evt.content);
-        if (evt.type === "error") { setError(evt.message); setStatus(null); }
+        if (evt.type === "error") { setToastMessage(evt.message); setStatus(null); }
         if (evt.type === "done") setStatus(null);
       }
     } catch (e) {
+      let toastMessage = e instanceof Error ? e.message : t("chat.error.generic");
       if ((e as { name?: string }).name === "AbortError") {
-        setStatus(t("chat.statusCancelled"));
-      } else {
-        setError(e instanceof Error ? e.message : t("chat.error.generic"));
-        setStatus(null);
+        toastMessage = t("chat.statusCancelled");
       }
+      setToastMessage(toastMessage);
+      setStatus(null);
     } finally {
       setIsStreaming(false);
       controllerRef.current = null;
@@ -57,5 +57,5 @@ export function useChatStream(service: ChatService, callbacks: StreamCallbacks) 
     controllerRef.current?.abort();
   }
 
-  return { status, error, isStreaming, run, cancel };
+  return { status, toastMessage, isStreaming, run, cancel };
 }

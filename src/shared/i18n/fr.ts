@@ -22,11 +22,12 @@ export const fr: Translations = {
   chat: {
     retry: "Réessayer",
     send: "Envoyer",
+    stop: "Arrêter",
     placeholder: "Posez une question...",
     roleAssistant: "Assistant",
     roleYou: "Vous",
     statusConnecting: "Connexion...",
-    statusCancelled: "Annulé.",
+    statusCancelled: "Invite annulée.",
     statusThinking: "Réflexion...",
     assistantWelcome: "Demandez-moi n'importe quoi, je vous répondrai en streaming.",
     error: {

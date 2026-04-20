@@ -175,18 +175,18 @@
 }
 
 .toastEnter {
-  animation: toastSlideIn 180ms ease forwards;
+  animation: toastSlideIn 350ms ease forwards;
 }
 
 .toastExit {
-  animation: toastSlideOut 220ms ease forwards;
+  animation: toastSlideOut 350ms ease forwards;
   pointer-events: none;
 }
 
 .toastAuto {
   animation:
-    toastSlideIn 180ms ease forwards,
-    toastSlideOut 220ms ease forwards 4000ms;
+    toastSlideIn 350ms ease forwards,
+    toastSlideOut 350ms ease forwards 2000ms;
 }
 
 .toastMessage {

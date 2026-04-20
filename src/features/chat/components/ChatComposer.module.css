@@ -36,6 +36,10 @@
   font-weight: 600;
   font-size: 12px;
   height: 36px;
+  min-width: 84px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .buttonPrimary {
