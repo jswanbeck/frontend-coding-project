@@ -44,12 +44,6 @@ export function useChatMessages(conversationCreatedAt: number) {
     return id;
   }
 
-  function removeMessagesById(ids: string[]) {
-    if (!ids.length) return;
-    const set = new Set(ids);
-    setMessages((prev) => prev.filter((m) => !set.has(m.id)));
-  }
-
   function appendTextChunk(assistantId: string, chunk: string) {
     setMessages((prev) =>
       prev.map((m) => {
@@ -60,6 +54,17 @@ export function useChatMessages(conversationCreatedAt: number) {
         const items = [...av.items];
         items[av.activeIndex] = nextContent;
         return { ...m, content: nextContent, assistantVersions: { ...av, items } };
+      }),
+    );
+  }
+
+  function prepareRetry(assistantId: string) {
+    setMessages((prev) =>
+      prev.map((m) => {
+        if (m.id !== assistantId || m.role !== "assistant") return m;
+        const existingItems = m.assistantVersions?.items?.length ? m.assistantVersions.items : [m.content];
+        const items = [...existingItems, ""];
+        return { ...m, content: "", createdAt: Date.now(), assistantVersions: { items, activeIndex: items.length - 1 } };
       }),
     );
   }
@@ -75,15 +80,10 @@ export function useChatMessages(conversationCreatedAt: number) {
     );
   }
 
-  function prepareRetry(assistantId: string) {
-    setMessages((prev) =>
-      prev.map((m) => {
-        if (m.id !== assistantId || m.role !== "assistant") return m;
-        const existingItems = m.assistantVersions?.items?.length ? m.assistantVersions.items : [m.content];
-        const items = [...existingItems, ""];
-        return { ...m, content: "", createdAt: Date.now(), assistantVersions: { items, activeIndex: items.length - 1 } };
-      }),
-    );
+  function removeMessagesById(ids: string[]) {
+    if (!ids.length) return;
+    const set = new Set(ids);
+    setMessages((prev) => prev.filter((m) => !set.has(m.id)));
   }
 
   function removeLatestAssistantVersion(assistantId: string) {
@@ -110,14 +110,14 @@ export function useChatMessages(conversationCreatedAt: number) {
   return {
     messages,
     setMessages,
-    lastUserMessage,
     resetToInitial,
     appendUserMessage,
     appendAssistantPlaceholder,
-    removeMessagesById,
     appendTextChunk,
-    setAssistantVersion,
     prepareRetry,
+    setAssistantVersion,
+    removeMessagesById,
     removeLatestAssistantVersion,
+    lastUserMessage,
   };
 }
