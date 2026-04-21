@@ -1,15 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { uid } from "@/shared/utils/id";
 import type { ChatRepository, ChatIndexItem, ChatIndexState } from "@/features/chat/persistence/chatRepository";
 
 export function useChatIndex(repo: ChatRepository) {
   const [state, setState] = useState<ChatIndexState>(() => repo.loadIndex());
-  const hydratedRef = useRef(true);
 
   useEffect(() => {
-    if (!hydratedRef.current) return;
     repo.saveIndex(state);
   }, [repo, state]);
 
