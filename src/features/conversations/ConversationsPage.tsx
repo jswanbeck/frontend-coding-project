@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import styles from "@/features/conversations/styles/conversations.module.css";
 import { AppShell } from "@/features/shell";
 import { useT } from "@/shared/i18n/useT";
-import { ChatAssistantPanel, useChatIndex } from "@/features/chat";
+import { ChatPage, useChatIndex } from "@/features/chat";
 import { formatTimestampUtc } from "@/shared/utils/time";
 import { localStorageChatRepository } from "@/features/chat/persistence/chatRepository";
 import { getChatService } from "@/services/chat";
@@ -83,7 +83,7 @@ export function ConversationsPage() {
           {t("home.close")}
         </button>
       </div>
-      <ChatAssistantPanel
+      <ChatPage
         chatId={activeId}
         conversationCreatedAt={activeCreatedAt ?? 0}
         service={service}

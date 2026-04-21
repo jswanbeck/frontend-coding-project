@@ -33,3 +33,10 @@
   height: calc(100dvh - 40px);
   color: var(--fg);
 }
+
+.chatPanel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}

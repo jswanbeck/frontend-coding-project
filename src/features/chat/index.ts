@@ -1,5 +1,4 @@
 export { ChatPage } from "@/features/chat/ChatPage";
-export { ChatAssistantPanel } from "@/features/chat/components/ChatAssistantPanel";
 export { ChatConversation } from "@/features/chat/components/ChatConversation";
 export { ChatComposer } from "@/features/chat/components/ChatComposer";
 export { ChatHeader } from "@/features/chat/components/ChatHeader";
